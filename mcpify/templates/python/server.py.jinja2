@@ -16,6 +16,7 @@ Run:
 import os
 import json
 import asyncio
+import atexit
 import httpx
 from mcp.server import Server
 from mcp.server.stdio import stdio_server
@@ -44,6 +45,19 @@ if not API_KEY:
 # export {{ spec.auth_env_var }}="your-base64-credentials"
 AUTH_CREDENTIALS = os.environ.get("{{ spec.auth_env_var }}", "")
 {% endif %}
+
+# Shared AsyncClient used by all handlers (connection pooling)
+_CLIENT = httpx.AsyncClient(timeout=30.0)
+
+def _close_client_sync() -> None:
+    try:
+        asyncio.run(_CLIENT.aclose())
+    except Exception:
+        # Best-effort close; don't error during shutdown
+        pass
+
+# Ensure the client is closed when the process exits
+atexit.register(_close_client_sync)
 
 # ─────────────────────────────────────────────
 # MCP Server
@@ -100,24 +114,24 @@ async def _handle_{{ tool.name }}(name: str, arguments: dict) -> list[types.Text
         body["{{ param.name }}"] = arguments["{{ param.name }}"]
     {% endif %}{% endfor %}
     
-    async with httpx.AsyncClient(timeout=30.0) as client:
-        response = await client.{{ tool.method | lower }}(
-            url,
-            params=query_params if query_params else None,
-            json=body if body else None,
-            headers=_build_headers(),
-        )
-        
-        # Return raw response text — Claude will interpret it
-        try:
-            response.raise_for_status()
-        except httpx.HTTPStatusError as e:
-            return [types.TextContent(
-                type="text",
-                text=f"HTTP Error {e.response.status_code}: {e.response.text}"
-            )]
-        
-        return [types.TextContent(type="text", text=response.text)]
+    # Use shared client for connection pooling
+    response = await _CLIENT.{{ tool.method | lower }}(
+        url,
+        params=query_params if query_params else None,
+        json=body if body else None,
+        headers=_build_headers(),
+    )
+    
+    # Return raw response text — Claude will interpret it
+    try:
+        response.raise_for_status()
+    except httpx.HTTPStatusError as e:
+        return [types.TextContent(
+            type="text",
+            text=f"HTTP Error {e.response.status_code}: {e.response.text}"
+        )]
+    
+    return [types.TextContent(type="text", text=response.text)]
 
 {% endfor %}
 
