@@ -7,6 +7,7 @@ into a complete, standalone Python MCP server directory.
 
 from __future__ import annotations
 from pathlib import Path
+from typing import Optional
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
@@ -15,17 +16,22 @@ from mcpify.ir import MCPSpec
 # Path to templates dir relative to this file
 TEMPLATES_DIR = Path(__file__).parent.parent / "templates" / "python"
 
+# Module-level cached Jinja environment (created lazily)
+_JINJA_ENV: Optional[Environment] = None
 
 def _get_jinja_env() -> Environment:
-    env = Environment(
-        loader=FileSystemLoader(str(TEMPLATES_DIR)),
-        autoescape=select_autoescape(["html"]),  # only for .html, not .py
-        trim_blocks=True,
-        lstrip_blocks=True,
-    )
-    # Custom filter: convert OpenAPI type to Python type hint
-    env.filters["python_type"] = _openapi_to_python_type
-    return env
+    global _JINJA_ENV
+    if _JINJA_ENV is None:
+        env = Environment(
+            loader=FileSystemLoader(str(TEMPLATES_DIR)),
+            autoescape=select_autoescape(["html"]),  # only for .html, not .py
+            trim_blocks=True,
+            lstrip_blocks=True,
+        )
+        # Custom filter: convert OpenAPI type to Python type hint
+        env.filters["python_type"] = _openapi_to_python_type
+        _JINJA_ENV = env
+    return _JINJA_ENV
 
 
 def _openapi_to_python_type(openapi_type: str) -> str:
@@ -43,34 +49,37 @@ def _openapi_to_python_type(openapi_type: str) -> str:
 def generate_python(spec: MCPSpec, output_dir: Path) -> list[Path]:
     """
     Generate a Python MCP server from an MCPSpec.
-    
+
     Creates output_dir/{slug}/ with:
       - server.py
       - requirements.txt
-    
+
     Returns list of created file paths.
     """
     env = _get_jinja_env()
-    
+
     server_dir = output_dir / spec.slug
     server_dir.mkdir(parents=True, exist_ok=True)
-    
+
     created_files: list[Path] = []
-    
+
+    # Convert spec to a plain dict to reduce attribute lookup overhead inside Jinja
+    spec_dict = spec.model_dump()
+
     # Render server.py
     server_template = env.get_template("server.py.jinja2")
-    server_code = server_template.render(spec=spec)
+    server_code = server_template.render(spec=spec_dict)
     server_path = server_dir / "server.py"
     server_path.write_text(server_code, encoding="utf-8")
     created_files.append(server_path)
-    
+
     # Render requirements.txt
     req_template = env.get_template("requirements.txt.jinja2")
-    req_text = req_template.render(spec=spec)
+    req_text = req_template.render(spec=spec_dict)
     req_path = server_dir / "requirements.txt"
     req_path.write_text(req_text, encoding="utf-8")
     created_files.append(req_path)
-    
+
     return created_files
 
 
@@ -78,4 +87,4 @@ def generate_dry_run(spec: MCPSpec) -> str:
     """Return the generated server.py as a string without writing to disk."""
     env = _get_jinja_env()
     template = env.get_template("server.py.jinja2")
-    return template.render(spec=spec)
+    return template.render(spec=spec.model_dump())
