@@ -28,7 +28,7 @@ except Exception:
 import httpx
 import yaml
 
-from mcpify.ir import MCPSpec
+from mcpgen.ir import MCPSpec
 from .openapi import parse_openapi
 from .postman import parse_postman
 
@@ -127,7 +127,7 @@ def _route(data: dict) -> MCPSpec:
     # Swagger 2.x detection — give a helpful error
     if "swagger" in data:
         raise LoaderError(
-            "Swagger 2.x detected. mcpify currently supports OpenAPI 3.x only. "
+            "Swagger 2.x detected. mcpgen currently supports OpenAPI 3.x only. "
             "Convert your spec at https://converter.swagger.io/ and try again."
         )
 
@@ -137,7 +137,7 @@ def _route(data: dict) -> MCPSpec:
         return parse_postman(data)
 
     raise LoaderError(
-        "Unrecognized format. mcpify supports:\n"
+        "Unrecognized format. mcpgen supports:\n"
         "  - OpenAPI 3.x JSON/YAML\n"
         "  - Postman Collection v2.1\n"
         "Check that your file has the correct structure."

@@ -1,5 +1,5 @@
 """
-Internal Representation (IR) for mcpify.
+Internal Representation (IR) for mcpgen.
 
 Every parser (OpenAPI, Postman, etc.) outputs an MCPSpec.
 The generator consumes MCPSpec. Nothing else crosses that boundary.

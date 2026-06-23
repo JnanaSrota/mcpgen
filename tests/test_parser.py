@@ -3,8 +3,8 @@
 import json
 import pytest
 from pathlib import Path
-from mcpify.parser.openapi import parse_openapi
-from mcpify.ir import MCPSpec
+from mcpgen.parser.openapi import parse_openapi
+from mcpgen.ir import MCPSpec
 
 PETSTORE_FIXTURE = Path(__file__).parent / "fixtures" / "petstore.json"
 

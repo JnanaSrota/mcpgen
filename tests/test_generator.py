@@ -4,8 +4,8 @@ import pytest
 from pathlib import Path
 import tempfile
 
-from mcpify.ir import MCPSpec, Tool, Param
-from mcpify.generator.python import generate_python, generate_dry_run
+from mcpgen.ir import MCPSpec, Tool, Param
+from mcpgen.generator.python import generate_python, generate_dry_run
 
 
 def make_simple_spec() -> MCPSpec:

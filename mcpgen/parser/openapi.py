@@ -18,7 +18,7 @@ from __future__ import annotations
 import re
 from typing import Any, Optional
 from urllib.parse import urljoin
-from mcpify.ir import MCPSpec, Tool, Param
+from mcpgen.ir import MCPSpec, Tool, Param
 
 
 # Mapping from OpenAPI primitive types to Python type hints

@@ -16,7 +16,7 @@ from __future__ import annotations
 import re
 from typing import Optional
 
-from mcpify.ir import MCPSpec, Tool, Param
+from mcpgen.ir import MCPSpec, Tool, Param
 
 
 def parse_postman(data: dict) -> MCPSpec:

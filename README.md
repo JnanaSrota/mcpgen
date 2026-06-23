@@ -1,43 +1,43 @@
-# mcpify
+# mcpgen
 
 > Turn any API into an MCP server in 30 seconds.
 
-[![asciicast](https://asciinema.org/a/zCiwFOtTHQzIrTpU.svg)](https://asciinema.org/a/zCiwFOtTHQzIrTpU)
+[![asciicast](https://asciinema.org/a/r5QCO433SyihhTjx.svg)](https://asciinema.org/a/r5QCO433SyihhTjx)
 
-[![PyPI version](https://badge.fury.io/py/mcpify.svg)](https://badge.fury.io/py/mcpify)
+[![PyPI version](https://badge.fury.io/py/mcpgen.svg)](https://badge.fury.io/py/mcpgen)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
-Point mcpify at an OpenAPI spec or Postman collection. Get back a complete, **source-code MCP server you own** — no runtime dependency on mcpify, no black box, no lock-in. Read it. Modify it. Ship it.
+Point mcpgen at an OpenAPI spec or Postman collection. Get back a complete, **source-code MCP server you own** — no runtime dependency on mcpgen, no black box, no lock-in. Read it. Modify it. Ship it.
 
 ---
 
 ## Install
 
 ```bash
-pip install mcpify
+pip install mcpgen
 ```
 
 ## Quickstart
 
 ```bash
 # From a URL
-mcpify https://petstore3.swagger.io/api/v3/openapi.json
+mcpgen https://petstore3.swagger.io/api/v3/openapi.json
 
 # From a local file
-mcpify stripe.yaml
+mcpgen stripe.yaml
 
 # Preview without writing anything
-mcpify openapi.json --dry-run
+mcpgen openapi.json --dry-run
 
 # Custom output directory
-mcpify openapi.json --output ~/my-mcp-servers
+mcpgen openapi.json --output ~/my-mcp-servers
 
 # Control the output name
-mcpify https://petstore3.swagger.io/api/v3/openapi.json --name "Petstore"
+mcpgen https://petstore3.swagger.io/api/v3/openapi.json --name "Petstore"
 ```
 
-That's it. mcpify reads your spec and writes a Python MCP server to disk.
+That's it. mcpgen reads your spec and writes a Python MCP server to disk.
 
 ## What you get
 
@@ -60,7 +60,7 @@ python server.py
 
 ## Add to Claude Desktop
 
-mcpify prints the exact config block to paste into `claude_desktop_config.json`:
+mcpgen prints the exact config block to paste into `claude_desktop_config.json`:
 
 ```json
 {
@@ -78,17 +78,17 @@ mcpify prints the exact config block to paste into `claude_desktop_config.json`:
 
 | Format                  | Example                                              |
 |-------------------------|------------------------------------------------------|
-| OpenAPI 3.x JSON        | `mcpify openapi.json`                                |
-| OpenAPI 3.x YAML        | `mcpify api.yaml`                                    |
-| URL (OpenAPI)           | `mcpify https://api.example.com/openapi.json`        |
-| Postman Collection v2.1 | `mcpify collection.json`                             |
+| OpenAPI 3.x JSON        | `mcpgen openapi.json`                                |
+| OpenAPI 3.x YAML        | `mcpgen api.yaml`                                    |
+| URL (OpenAPI)           | `mcpgen https://api.example.com/openapi.json`        |
+| Postman Collection v2.1 | `mcpgen collection.json`                             |
 
-## Why mcpify?
+## Why mcpgen?
 
-Most API-to-MCP tools are **runtime proxies** — your server only works as long as their service does. mcpify is different:
+Most API-to-MCP tools are **runtime proxies** — your server only works as long as their service does. mcpgen is different:
 
 - **You own the code.** The output is plain Python. Read it, audit it, fork it.
-- **No runtime dependency.** mcpify is only needed to generate. After that, throw it away.
+- **No runtime dependency.** mcpgen is only needed to generate. After that, throw it away.
 - **Deploy anywhere.** The generated server runs wherever Python runs.
 - **Customize freely.** Auth logic, retry behavior, response shaping — it's all in a file you control.
 
@@ -113,12 +113,12 @@ Contributions are welcome in these areas:
 PRs and issues welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md) for setup instructions.
 
 ```bash
-git clone https://github.com/JnanaSrota/mcpify
-cd mcpify
+git clone https://github.com/JnanaSrota/mcpgen
+cd mcpgen
 pip install -e ".[dev]"
 pytest
 ```
 
 ## License
 
-MIT — do whatever you want with mcpify and with the code it generates.
+MIT — do whatever you want with mcpgen and with the code it generates.

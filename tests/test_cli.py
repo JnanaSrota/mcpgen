@@ -2,7 +2,7 @@
 
 import pytest
 from typer.testing import CliRunner
-from mcpify.cli import app
+from mcpgen.cli import app
 import tempfile
 from pathlib import Path
 import json
@@ -28,7 +28,7 @@ MINIMAL_OPENAPI = {
 def test_version():
     result = runner.invoke(app, ["--version"])
     assert result.exit_code == 0
-    assert "mcpify" in result.output
+    assert "mcpgen" in result.output
 
 
 def test_help():

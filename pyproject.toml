@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "mcpify"
+name = "mcpgen"
 version = "0.1.0"
 description = "Turn any API into an MCP server in 30 seconds"
 readme = "README.md"
@@ -37,16 +37,16 @@ dev = [
 ]
 
 [project.scripts]
-mcpify = "mcpify.cli:app"
+mcpgen = "mcpgen.cli:app"
 
 [project.urls]
-Homepage = "https://github.com/JnanaSrota/mcpify"
-Repository = "https://github.com/JnanaSrota/mcpify"
-Issues = "https://github.com/JnanaSrota/mcpify/issues"
-Documentation = "https://github.com/JnanaSrota/mcpify#readme"
+Homepage = "https://github.com/JnanaSrota/mcpgen"
+Repository = "https://github.com/JnanaSrota/mcpgen"
+Issues = "https://github.com/JnanaSrota/mcpgen/issues"
+Documentation = "https://github.com/JnanaSrota/mcpgen#readme"
 
 [tool.hatch.build.targets.wheel]
-packages = ["mcpify"]
+packages = ["mcpgen"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

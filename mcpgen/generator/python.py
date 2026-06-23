@@ -11,7 +11,7 @@ from typing import Optional
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from mcpify.ir import MCPSpec
+from mcpgen.ir import MCPSpec
 
 # Path to templates dir relative to this file
 TEMPLATES_DIR = Path(__file__).parent.parent / "templates" / "python"

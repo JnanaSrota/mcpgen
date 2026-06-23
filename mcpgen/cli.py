@@ -1,11 +1,11 @@
 """
-mcpify CLI — main entry point.
+mcpgen CLI — main entry point.
 
 Usage:
-  mcpify openapi.json
-  mcpify https://petstore3.swagger.io/api/v3/openapi.json
-  mcpify postman.json --output ./my-mcp
-  mcpify openapi.yaml --dry-run
+  mcpgen openapi.json
+  mcpgen https://petstore3.swagger.io/api/v3/openapi.json
+  mcpgen postman.json --output ./my-mcp
+  mcpgen openapi.yaml --dry-run
 """
 
 from __future__ import annotations
@@ -21,12 +21,12 @@ from rich.syntax import Syntax
 from rich.table import Table
 from rich import box
 
-from mcpify import __version__
-from mcpify.parser import load, LoaderError
-from mcpify.generator import generate_python, generate_dry_run
+from mcpgen import __version__
+from mcpgen.parser import load, LoaderError
+from mcpgen.generator import generate_python, generate_dry_run
 
 app = typer.Typer(
-    name="mcpify",
+    name="mcpgen",
     help="Turn any API into an MCP server in 30 seconds.",
     add_completion=False,
     rich_markup_mode="rich",
@@ -37,7 +37,7 @@ console = Console()
 
 def _version_callback(value: bool):
     if value:
-        rprint(f"mcpify v{__version__}")
+        rprint(f"mcpgen v{__version__}")
         raise typer.Exit()
 
 
@@ -78,13 +78,13 @@ def main(
     ),
 ):
     """
-    [bold cyan]mcpify[/bold cyan] — Turn any API into an MCP server in 30 seconds.
+    [bold cyan]mcpgen[/bold cyan] — Turn any API into an MCP server in 30 seconds.
 
     Examples:
-      mcpify openapi.json
-      mcpify https://petstore3.swagger.io/api/v3/openapi.json
-      mcpify stripe.yaml --output ./stripe-mcp
-      mcpify postman.json --dry-run
+      mcpgen openapi.json
+      mcpgen https://petstore3.swagger.io/api/v3/openapi.json
+      mcpgen stripe.yaml --output ./stripe-mcp
+      mcpgen postman.json --dry-run
     """
     
     if no_color:
@@ -93,7 +93,7 @@ def main(
     # Header
     console.print()
     console.print(Panel(
-        f"[bold cyan]mcpify[/bold cyan] [dim]v{__version__}[/dim]",
+        f"[bold cyan]mcpgen[/bold cyan] [dim]v{__version__}[/dim]",
         box=box.ROUNDED,
         expand=False,
         border_style="cyan",
