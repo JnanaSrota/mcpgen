@@ -1,0 +1,124 @@
+# mcpify
+
+> Turn any API into an MCP server in 30 seconds.
+
+[![asciicast](https://asciinema.org/a/zCiwFOtTHQzIrTpU.svg)](https://asciinema.org/a/zCiwFOtTHQzIrTpU)
+
+[![PyPI version](https://badge.fury.io/py/mcpify.svg)](https://badge.fury.io/py/mcpify)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+
+Point mcpify at an OpenAPI spec or Postman collection. Get back a complete, **source-code MCP server you own** — no runtime dependency on mcpify, no black box, no lock-in. Read it. Modify it. Ship it.
+
+---
+
+## Install
+
+```bash
+pip install mcpify
+```
+
+## Quickstart
+
+```bash
+# From a URL
+mcpify https://petstore3.swagger.io/api/v3/openapi.json
+
+# From a local file
+mcpify stripe.yaml
+
+# Preview without writing anything
+mcpify openapi.json --dry-run
+
+# Custom output directory
+mcpify openapi.json --output ~/my-mcp-servers
+
+# Control the output name
+mcpify https://petstore3.swagger.io/api/v3/openapi.json --name "Petstore"
+```
+
+That's it. mcpify reads your spec and writes a Python MCP server to disk.
+
+## What you get
+
+A self-contained directory you can read, edit, and deploy anywhere:
+
+```
+stripe_api_mcp/
+├── server.py          ← the MCP server (yours to customize)
+└── requirements.txt   ← httpx, mcp
+```
+
+Run it immediately:
+
+```bash
+cd stripe_api_mcp
+pip install -r requirements.txt
+export STRIPE_API_TOKEN="sk_live_..."
+python server.py
+```
+
+## Add to Claude Desktop
+
+mcpify prints the exact config block to paste into `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "stripe-api-mcp": {
+      "command": "python",
+      "args": ["/path/to/stripe_api_mcp/server.py"],
+      "env": { "STRIPE_API_TOKEN": "your-key-here" }
+    }
+  }
+}
+```
+
+## Supported inputs
+
+| Format                  | Example                                              |
+|-------------------------|------------------------------------------------------|
+| OpenAPI 3.x JSON        | `mcpify openapi.json`                                |
+| OpenAPI 3.x YAML        | `mcpify api.yaml`                                    |
+| URL (OpenAPI)           | `mcpify https://api.example.com/openapi.json`        |
+| Postman Collection v2.1 | `mcpify collection.json`                             |
+
+## Why mcpify?
+
+Most API-to-MCP tools are **runtime proxies** — your server only works as long as their service does. mcpify is different:
+
+- **You own the code.** The output is plain Python. Read it, audit it, fork it.
+- **No runtime dependency.** mcpify is only needed to generate. After that, throw it away.
+- **Deploy anywhere.** The generated server runs wherever Python runs.
+- **Customize freely.** Auth logic, retry behavior, response shaping — it's all in a file you control.
+
+## Tested APIs
+
+- Petstore (`https://petstore3.swagger.io/api/v3/openapi.json`)
+- GitHub REST API
+- Stripe (subset)
+- Any OpenAPI 3.x spec
+
+## Roadmap
+
+Contributions are welcome in these areas:
+
+- [ ] TypeScript output (`--lang ts`)
+- [ ] Swagger 2.x support
+- [ ] `$ref` recursive resolution
+- [ ] Auto-detect OpenAPI URL from well-known paths (`.well-known/openapi.json`)
+
+## Contributing
+
+PRs and issues welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md) for setup instructions.
+
+```bash
+git clone https://github.com/JnanaSrota/mcpify
+cd mcpify
+pip install -e ".[dev]"
+pytest
+```
+
+## License
+
+MIT — do whatever you want with mcpify and with the code it generates.

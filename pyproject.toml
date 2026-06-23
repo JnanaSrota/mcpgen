@@ -1,0 +1,52 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mcpify"
+version = "0.1.0"
+description = "Turn any API into an MCP server in 30 seconds"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+keywords = ["mcp", "llm", "api", "claude", "openapi", "code-generation", "anthropic"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Software Development :: Code Generators",
+]
+dependencies = [
+    "typer>=0.12.0",
+    "rich>=13.7.0",
+    "httpx>=0.27.0",
+    "pyyaml>=6.0.0",
+    "jinja2>=3.1.0",
+    "pydantic>=2.0.0",
+    "mcp>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+]
+
+[project.scripts]
+mcpify = "mcpify.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/JnanaSrota/mcpify"
+Repository = "https://github.com/JnanaSrota/mcpify"
+Issues = "https://github.com/JnanaSrota/mcpify/issues"
+Documentation = "https://github.com/JnanaSrota/mcpify#readme"
+
+[tool.hatch.build.targets.wheel]
+packages = ["mcpify"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
