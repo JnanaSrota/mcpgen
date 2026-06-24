@@ -63,15 +63,12 @@ Thumbs.db
 # Project-specific
 mcp-demo/
 *.cast
-*.gif
 frames/
 node_modules/
 config.yml
 demo2.yml
+!demo.gif 
 
 # Environment variables
-.envoutput/
-mcp-demo/
-mcp-demo/
-output/
-*_mcp/
+.env
+
