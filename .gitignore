@@ -70,4 +70,8 @@ config.yml
 demo2.yml
 
 # Environment variables
-.env
+.envoutput/
+mcp-demo/
+mcp-demo/
+output/
+*_mcp/
