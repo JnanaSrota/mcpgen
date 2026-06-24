@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "mcpgen"
+name = "mcpgen-cli"
 version = "0.1.0"
 description = "Turn any API into an MCP server in 30 seconds"
 readme = "README.md"

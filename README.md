@@ -1,5 +1,5 @@
 [![CI](https://github.com/JnanaSrota/mcpgen/actions/workflows/ci.yml/badge.svg)](https://github.com/JnanaSrota/mcpgen/actions/workflows/ci.yml)
-[![PyPI version](https://badge.fury.io/py/mcgen.svg)](https://pypi.org/project/mcgen/)
+[![PyPI version](https://badge.fury.io/py/mcpgen-cli-cli.svg)](https://pypi.org/project/mcpgen-cli-cli/)
 [![Python versions](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 
 # mcgen
@@ -8,7 +8,7 @@
 
 [![asciicast](https://asciinema.org/a/zCiwFOtTHQzIrTpU.svg)](https://asciinema.org/a/zCiwFOtTHQzIrTpU)
 
-[![PyPI version](https://badge.fury.io/py/mcgen.svg)](https://pypi.org/project/mcgen/)
+[![PyPI version](https://badge.fury.io/py/mcpgen-cli-cli.svg)](https://pypi.org/project/mcpgen-cli-cli/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
@@ -19,26 +19,26 @@ Point mcgen at an OpenAPI spec or Postman collection. Get back a complete, **sou
 ## Install
 
 ```bash
-pip install mcgen
+pip install mcpgen-cli
 ```
 
 ## Quickstart
 
 ```bash
 # From a URL
-mcgen https://petstore3.swagger.io/api/v3/openapi.json
+mcpgen https://petstore3.swagger.io/api/v3/openapi.json
 
 # From a local file
-mcgen stripe.yaml
+mcpgen stripe.yaml
 
 # Preview without writing anything
-mcgen openapi.json --dry-run
+mcpgen openapi.json --dry-run
 
 # Custom output directory
-mcgen openapi.json --output ~/my-mcp-servers
+mcpgen openapi.json --output ~/my-mcp-servers
 
 # Control the output name
-mcgen https://petstore3.swagger.io/api/v3/openapi.json --name "Petstore"
+mcpgen https://petstore3.swagger.io/api/v3/openapi.json --name "Petstore"
 ```
 
 That's it. mcgen reads your spec and writes a Python MCP server to disk.
@@ -64,7 +64,7 @@ python server.py
 
 ## Add to Claude Desktop
 
-mcgen prints the exact config block to paste into `claude_desktop_config.json`:
+mcpgen prints the exact config block to paste into `claude_desktop_config.json`:
 
 ```json
 {
