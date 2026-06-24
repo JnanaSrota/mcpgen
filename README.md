@@ -4,10 +4,12 @@
 
 **Turn any API into an MCP server in 30 seconds.**
 
-[![CI](https://github.com/JnanaSrota/mcpgen/actions/workflows/ci.yml/badge.svg)](https://github.com/JnanaSrota/mcpgen/actions/workflows/ci.yml)
-[![PyPI version](https://badge.fury.io/py/mcpgen-cli.svg)](https://pypi.org/project/mcpgen-cli/)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PyPI version](https://img.shields.io/pypi/v/mcpgen-cli?style=flat-square&color=blue)](https://pypi.org/project/mcpgen-cli/)
+[![Python](https://img.shields.io/badge/python-3.10+-blue?style=flat-square&logo=python&logoColor=white)](https://www.python.org)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green?style=flat-square)](https://opensource.org/licenses/MIT)
+[![MCP](https://img.shields.io/badge/MCP-protocol-purple?style=flat-square)](https://modelcontextprotocol.io)
+[![GitHub stars](https://img.shields.io/github/stars/JnanaSrota/mcpgen?style=flat-square&color=yellow)](https://github.com/JnanaSrota/mcpgen/stargazers)
+[![CI](https://img.shields.io/github/actions/workflow/status/JnanaSrota/mcpgen/ci.yml?style=flat-square&branch=main)](https://github.com/JnanaSrota/mcpgen/actions)
 
 </div>
 
