@@ -7,6 +7,7 @@ from mcpgen.parser.openapi import parse_openapi
 from mcpgen.ir import MCPSpec
 
 PETSTORE_FIXTURE = Path(__file__).parent / "fixtures" / "petstore.json"
+XQUIK_FIXTURE = Path(__file__).parent / "fixtures" / "xquik-openapi31.json"
 
 
 def load_petstore() -> dict:
@@ -17,6 +18,11 @@ def load_petstore() -> dict:
         PETSTORE_FIXTURE.parent.mkdir(exist_ok=True)
         PETSTORE_FIXTURE.write_text(resp.text)
     return json.loads(PETSTORE_FIXTURE.read_text())
+
+
+def load_xquik() -> dict:
+    """Load the Xquik OpenAPI 3.1 fixture."""
+    return json.loads(XQUIK_FIXTURE.read_text())
 
 
 def test_parse_openapi_returns_mcp_spec():
@@ -44,6 +50,27 @@ def test_parse_openapi_base_url():
     spec = parse_openapi(data)
     assert spec.base_url.startswith("http")
     assert not spec.base_url.endswith("/")
+
+
+def test_parse_openapi31_api_key_header():
+    data = load_xquik()
+    spec = parse_openapi(data)
+
+    assert spec.name == "Xquik API"
+    assert spec.base_url == "https://xquik.com"
+    assert spec.auth_type == "api_key"
+    assert spec.auth_env_var == "XQUIK_API_API_KEY"
+
+    tools_by_name = {tool.name: tool for tool in spec.tools}
+    assert set(tools_by_name) == {"lookup_tweet", "get_user"}
+
+    lookup = tools_by_name["lookup_tweet"]
+    assert lookup.method == "GET"
+    assert lookup.path == "/api/v1/x/tweets/{id}"
+    assert lookup.auth_type == "api_key"
+    assert lookup.auth_header == "x-api-key"
+    assert lookup.params[0].name == "id"
+    assert lookup.params[0].location == "path"
 
 
 def test_parse_minimal_spec():
